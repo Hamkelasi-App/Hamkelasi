@@ -1,0 +1,21 @@
+{
+  "name": "همکلاسی",
+  "short_name": "همکلاسی",
+  "start_url": "meshkat.html",
+  "display": "standalone",
+  "background_color": "#00d1d1",
+  "theme_color": "#00d1d1",
+  "orientation": "portrait",
+  "icons": [
+    {
+      "src": "Icon-192 (2).png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "hamkelasy-logo-512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}

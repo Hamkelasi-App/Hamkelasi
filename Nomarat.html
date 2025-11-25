@@ -1,0 +1,1335 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hamkelasi</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+  body {
+    margin: 0;
+    font-family: "Vazirmatn", sans-serif;
+    background-color: #f6f8fa;
+    color: #333;
+    direction: rtl;
+  }
+    html,body{height:100%;margin:0;font-family:'Vazirmatn', system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial; background: #f2f7f8;color:#1e2b2b}
+
+    /* هدر */
+    .header {
+      background-color: #00d1d1;
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 12px 16px;
+    }
+
+    .header h1 {
+      font-size: 1.1rem;
+      font-weight: bold;
+      margin: 0;
+      text-align: center;
+      flex: 1;
+    }
+
+    .icon-btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      transition: 0.2s;
+    }
+
+    .icon-btn:hover {
+      background-color: rgba(255, 255, 255, 0.15);
+    }
+
+    .icon-btn img {
+      width: 40px;
+      height: 40px;
+      object-fit: contain;
+    }
+
+/* تب‌ها */
+.tabs {
+  display: flex;
+  flex-direction: row-reverse; /* تب‌ها برعکس می‌شن */
+  background-color: #00d1d1;
+  color: white;
+  font-weight: bold;
+}
+
+    .tab {
+      flex: 1;
+      text-align: center;
+      padding: 12px 0;
+      border-bottom: 4px solid transparent;
+      cursor: pointer;
+      transition: 0.3s;
+      font-size: 1rem;
+    }
+
+    .tab.active {
+      border-color: white;
+    }
+    /* واکنش‌گرا */
+    @media (max-width: 600px) {
+      .header h1 {
+        font-size: 1rem;
+      }
+      .avatar {
+        width: 40px;
+        height: 40px;
+      }
+      .tab {
+        font-size: 0.9rem;
+      }
+      .icon-btn img {
+        width: 35px;
+        height: 35px;
+      }
+    }
+
+ /* ===== کارت‌ها ===== */
+.cards-container {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  padding: 20px;
+}
+
+.card {
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  overflow: hidden;
+  position: relative;
+}
+
+.card-header {
+  background: #e9fafa;
+  padding: 12px 15px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.card-header .subject {
+  font-weight: bold;
+}
+
+.card-header .badge {
+  background: #00c2c7;
+  color: white;
+  padding: 2px 8px;
+  border-radius: 10px;
+  font-size: 12px;
+}
+
+.card-header .dots {
+  font-size: 20px;
+  cursor: pointer;
+}
+
+.card-body {
+  display: flex;
+  justify-content: space-between;
+  padding: 12px 15px;
+  background: #fafafa;
+  border-top: 1px solid #eee;
+  font-size: 14px;
+}
+
+.card-body div {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.card-body .labels { color: #9b9b9b; }
+.card-body .values { font-weight: normal; }
+
+/* ===== مودال ===== */
+.modal {
+  position: fixed;
+  top:0; left:0;
+  width:100%; height:100%;
+  background: rgba(0,0,0,0.4);
+  display: none;
+  justify-content: center;
+  align-items: center;
+  z-index: 100;
+}
+
+.modal-content {
+  background: white;
+  border-radius: 12px;
+  padding: 20px;
+  width: 85%;
+  max-width: 350px;
+  text-align: center;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+  position: relative;
+}
+
+.modal-content .close {
+  position: absolute;
+  left: 15px;
+  top: 15px;
+  font-size: 20px;
+  cursor: pointer;
+  color: #888;
+}
+
+.modal-content .close:hover { color: #333; }
+
+/* ===== ریسپانسیو ===== */
+@media(max-width:600px){
+  .top-bar { font-size:14px; padding:12px 15px; }
+  .card-body { font-size:13px; }
+  .modal-content { padding: 15px; width: 90%; }
+}
+.values span, .labels span {
+  font-family: "Vazirmatn", sans-serif; /* فونتت */
+  unicode-bidi: embed; /* اجباری کردن جهت نمایش */
+  direction: ltr; /* نمایش اعداد لاتین */
+}
+.card-body {
+  display: flex;
+  justify-content: space-between; /* فاصله بین ستون‌ها */
+  padding: 12px 15px;
+  background: #fafafa;
+  border-top: 1px solid #eee;
+  font-size: 14px;
+  text-align: right; /* اضافه کردن */
+}
+
+.card-body .values {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  text-align: left; /* اضافه کردن */
+}
+
+.card-body .labels {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  text-align: right; /* اضافه کردن */
+}
+</style>
+</head>
+<body>
+    <!-- هدر -->
+  <div class="header">
+    <!-- فلش برگشت با لینک -->
+    <a href="index.html" class="icon-btn">
+      <img src="18.png" alt="Back" />
+    </a>
+
+    <h1>نمرات</h1>
+
+    <!-- سه‌نقطه با لینک -->
+    <a href="#" class="icon-btn">
+      <img src="19.png" alt="Menu" />
+    </a>
+  </div>
+
+<div class="tabs">
+  <div id="receivedTab" class="tab active">همه نمرات</div>
+  <div id="sentTab" class="tab">مشاهده نشده</div>
+</div>
+
+  <div id="content" class="content">
+
+
+
+<div class="cards-container">
+   <!-- کارت دوم -->
+<div class="card" data-subject="عربی 1" data-type="پرسش کلاسی" data-teacher="محمد دیبا" data-date="شنبه 10 آبان 1404" data-score="2.5/5" >
+    <div class="card-header">
+      <div>
+        <span class="subject">عربی</span>
+        <span class="badge">عادی</span>
+      </div>
+      <span class="dots">⋮</span>
+    </div>
+    <div class="card-body">
+      <div class="labels">
+        <span>نوع امتحان</span>
+        <span>تاریخ</span>
+        <span>نمره</span>
+      </div>
+      <div class="values">
+        <span>پرسش کلاسی</span>
+        <span>شنبه 10 آبان ۱۴۰۴</span>
+        <span>2.5</span>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- کارت اول -->
+    <!-- کارت دوم -->
+<div class="card" data-subject="فارسی 1" data-type="پرسش شفاهی" data-teacher="محسن ابراهیم‌پور" data-date="چهارشنبه 7 آبان 1404" data-score="19/20" >
+    <div class="card-header">
+      <div>
+        <span class="subject">فارسی</span>
+        <span class="badge">عادی</span>
+      </div>
+      <span class="dots">⋮</span>
+    </div>
+    <div class="card-body">
+      <div class="labels">
+        <span>نوع امتحان</span>
+        <span>تاریخ</span>
+        <span>نمره</span>
+      </div>
+      <div class="values">
+        <span>پرسش شفاهی</span>
+        <span>چهارشنبه 7 آبان ۱۴۰۴</span>
+        <span>19.0</span>
+      </div>
+    </div>
+  </div>
+
+<div class="card" data-subject="فیزیک 1" data-type="پرسش کلاسی" data-teacher="مهدی فتاحی" data-date="سه‌شنبه 6 آبان 1404" data-score="20/20" >
+    <div class="card-header">
+      <div>
+        <span class="subject">فیزیک</span>
+        <span class="badge">عادی</span>
+      </div>
+      <span class="dots">⋮</span>
+    </div>
+    <div class="card-body">
+      <div class="labels">
+        <span>نوع امتحان</span>
+        <span>تاریخ</span>
+        <span>نمره</span>
+      </div>
+      <div class="values">
+        <span>پرسش کلاسی</span>
+        <span>سه‌شنبه 6 آبان ۱۴۰۴</span>
+        <span>20</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- کارت دوم -->
+<div class="card" data-subject="ریاضی 1" data-type="ماهانه" data-teacher="جوادی‌فر" data-date="دوشنبه 5 آبان 1404" data-score="9/20" >
+    <div class="card-header">
+      <div>
+        <span class="subject">ریاضی</span>
+        <span class="badge">عادی</span>
+      </div>
+      <span class="dots">⋮</span>
+    </div>
+    <div class="card-body">
+      <div class="labels">
+        <span>نوع امتحان</span>
+        <span>تاریخ</span>
+        <span>نمره</span>
+      </div>
+      <div class="values">
+        <span>ماهانه</span>
+        <span>دوشنبه 5 آبان ۱۴۰۴</span>
+        <span>9</span>
+      </div>
+    </div>
+  </div>
+
+
+ <!-- کارت دوم -->
+<div class="card" data-subject="نگارش 1" data-type="پرسش کلاسی" data-teacher="محسن ابراهیم‌پور" data-date="شنبه 3 آبان 1404" data-score="19/20" >
+    <div class="card-header">
+      <div>
+        <span class="subject">نگارش</span>
+        <span class="badge">عادی</span>
+      </div>
+      <span class="dots">⋮</span>
+    </div>
+    <div class="card-body">
+      <div class="labels">
+        <span>نوع امتحان</span>
+        <span>تاریخ</span>
+        <span>نمره</span>
+      </div>
+      <div class="values">
+        <span>پرسش کلاسی</span>
+        <span>سه‌شنبه 3 آبان ۱۴۰۴</span>
+        <span>19</span>
+      </div>
+    </div>
+  </div>
+
+
+ <!-- کارت دوم -->
+<div class="card" data-subject="عربی 1" data-type="ازمون کلاسی" data-teacher="محمد دیبا" data-date="شنبه 3 آبان 1404" data-score="17.5/20" >
+    <div class="card-header">
+      <div>
+        <span class="subject">عربی</span>
+        <span class="badge">عادی</span>
+      </div>
+      <span class="dots">⋮</span>
+    </div>
+    <div class="card-body">
+      <div class="labels">
+        <span>نوع امتحان</span>
+        <span>تاریخ</span>
+        <span>نمره</span>
+      </div>
+      <div class="values">
+        <span>ازمون کلاسی</span>
+        <span>سه‌شنبه 3 آبان ۱۴۰۴</span>
+        <span>17.5</span>
+      </div>
+    </div>
+  </div>
+
+
+ <!-- کارت دوم -->
+<div class="card" data-subject="زبان 1" data-type="پرسش کلاسی" data-teacher="محمد علی‌زاده" data-date="یک‌شنبه 27 مهر 1404" data-score="16.5/20" >
+    <div class="card-header">
+      <div>
+        <span class="subject">زبان خارجی</span>
+        <span class="badge">عادی</span>
+      </div>
+      <span class="dots">⋮</span>
+    </div>
+    <div class="card-body">
+      <div class="labels">
+        <span>نوع امتحان</span>
+        <span>تاریخ</span>
+        <span>نمره</span>
+      </div>
+      <div class="values">
+        <span>پرسش کلاسی</span>
+        <span>یک‌شنبه 3 مهر ۱۴۰۴</span>
+        <span>16.5</span>
+      </div>
+    </div>
+  </div>
+
+
+
+<div class="card" data-subject="امادگی دفاعی 1" data-type="پرسش کلاسی" data-teacher="احمد رضا قلی زاده" data-date="دوشنبه 21 مهر 1404" data-score="19/20" >
+    <div class="card-header">
+      <div>
+        <span class="subject">امادگی دفاعی</span>
+        <span class="badge">عادی</span>
+      </div>
+      <span class="dots">⋮</span>
+    </div>
+    <div class="card-body">
+      <div class="labels">
+        <span>نوع امتحان</span>
+        <span>تاریخ</span>
+        <span>نمره</span>
+      </div>
+      <div class="values">
+        <span>پرسش کلاسی</span>
+        <span>دوشنبه 21 مهر ۱۴۰۴</span>
+        <span>19.0</span>
+      </div>
+    </div>
+  </div>
+
+
+
+ <!-- کارت دوم -->
+<div class="card" data-subject="فیزیک 1" data-type="کوییز" data-teacher="مهدی فتاحی" data-date="دوشنبه 21 مهر 1404" data-score="18/20" >
+    <div class="card-header">
+      <div>
+        <span class="subject">فیزیک</span>
+        <span class="badge">عادی</span>
+      </div>
+      <span class="dots">⋮</span>
+    </div>
+    <div class="card-body">
+      <div class="labels">
+        <span>نوع امتحان</span>
+        <span>تاریخ</span>
+        <span>نمره</span>
+      </div>
+      <div class="values">
+        <span>کوییز</span>
+        <span>دوشنبه 21 مهر ۱۴۰۴</span>
+        <span>18.0</span>
+      </div>
+    </div>
+  </div>
+
+
+
+
+ <!-- کارت دوم -->
+<div class="card" data-subject="عربی 1" data-type="آزمون اغازین" data-teacher="محمد دیبا" data-date="شنبه 12 مهر 1404" data-score="9/10" >
+    <div class="card-header">
+      <div>
+        <span class="subject">عربی</span>
+        <span class="badge">عادی</span>
+      </div>
+      <span class="dots">⋮</span>
+    </div>
+    <div class="card-body">
+      <div class="labels">
+        <span>نوع امتحان</span>
+        <span>تاریخ</span>
+        <span>نمره</span>
+      </div>
+      <div class="values">
+        <span>ازمون اغازین</span>
+        <span>شنبه 12 مهر ۱۴۰۴</span>
+        <span>9.0</span>
+      </div>
+    </div>
+  </div>
+
+ <!-- کارت دوم -->
+<div class="card" data-subject="زبان خارجی 1" data-type="آزمون اغازین" data-teacher="محمد علی‌زاده" data-date="شنبه 12 مهر 1404" data-score="8/10" >
+    <div class="card-header">
+      <div>
+        <span class="subject">زبان</span>
+        <span class="badge">عادی</span>
+      </div>
+      <span class="dots">⋮</span>
+    </div>
+    <div class="card-body">
+      <div class="labels">
+        <span>نوع امتحان</span>
+        <span>تاریخ</span>
+        <span>نمره</span>
+      </div>
+      <div class="values">
+        <span>ازمون اغازین</span>
+        <span>شنبه 12 مهر ۱۴۰۴</span>
+        <span>8.0</span>
+      </div>
+    </div>
+  </div>
+
+
+ <!-- کارت دوم -->
+<div class="card" data-subject="ریاضی 1" data-type="آزمون اغازین" data-teacher="وحید جوادی‌فر" data-date="شنبه 12 مهر 1404" data-score="6/10" >
+    <div class="card-header">
+      <div>
+        <span class="subject">ریاضی</span>
+        <span class="badge">عادی</span>
+      </div>
+      <span class="dots">⋮</span>
+    </div>
+    <div class="card-body">
+      <div class="labels">
+        <span>نوع امتحان</span>
+        <span>تاریخ</span>
+        <span>نمره</span>
+      </div>
+      <div class="values">
+        <span>ازمون اغازین</span>
+        <span>شنبه 12 مهر ۱۴۰۴</span>
+        <span>6.0</span>
+      </div>
+    </div>
+  </div>
+
+
+
+ <!-- کارت دوم -->
+<div class="card" data-subject="تعلیمات دینی 1" data-type="آزمون اغازین" data-teacher="یوسف کاضمی" data-date="شنبه 12 مهر 1404" data-score="5/10" >
+    <div class="card-header">
+      <div>
+        <span class="subject">تعلیمات دینی</span>
+        <span class="badge">عادی</span>
+      </div>
+      <span class="dots">⋮</span>
+    </div>
+    <div class="card-body">
+      <div class="labels">
+        <span>نوع امتحان</span>
+        <span>تاریخ</span>
+        <span>نمره</span>
+      </div>
+      <div class="values">
+        <span>ازمون اغازین</span>
+        <span>شنبه 12 مهر ۱۴۰۴</span>
+        <span>5.0</span>
+      </div>
+    </div>
+  </div>
+
+ <!-- کارت دوم -->
+<div class="card" data-subject="ادبیات فارسی 1" data-type="آزمون اغازین" data-teacher="محسن ابراهیم‌پور" data-date="شنبه 12 مهر 1404" data-score="9/10" >
+    <div class="card-header">
+      <div>
+        <span class="subject">ادبیات فارسی</span>
+        <span class="badge">عادی</span>
+      </div>
+      <span class="dots">⋮</span>
+    </div>
+    <div class="card-body">
+      <div class="labels">
+        <span>نوع امتحان</span>
+        <span>تاریخ</span>
+        <span>نمره</span>
+      </div>
+      <div class="values">
+        <span>ازمون اغازین</span>
+        <span>شنبه 12 مهر ۱۴۰۴</span>
+        <span>9.0</span>
+      </div>
+    </div>
+  </div>
+
+
+ <!-- کارت دوم -->
+<div class="card" data-subject="آزمایشگاه علوم تجربی 1" data-type="آزمون اغازین" data-teacher="زین العابدین خلیلی" data-date="شنبه 12 مهر 1404" data-score="6/10" >
+    <div class="card-header">
+      <div>
+        <span class="subject">آزمایشگاه علوم تجربی</span>
+        <span class="badge">عادی</span>
+      </div>
+      <span class="dots">⋮</span>
+    </div>
+    <div class="card-body">
+      <div class="labels">
+        <span>نوع امتحان</span>
+        <span>تاریخ</span>
+        <span>نمره</span>
+      </div>
+      <div class="values">
+        <span>ازمون اغازین</span>
+        <span>شنبه 12 مهر ۱۴۰۴</span>
+        <span>6.0</span>
+      </div>
+    </div>
+  </div>
+
+ <!-- کارت دوم -->
+<div class="card" data-subject="جغرافیای عمومی و استان شناسی 1" data-type="ماهانه" data-teacher="علیرضا صابری" data-date="یکشنبه 20 مهر 1404" data-score="19/20" >
+    <div class="card-header">
+      <div>
+        <span class="subject">جغرافیای عمومی و استان شناسی</span>
+        <span class="badge">عادی</span>
+      </div>
+      <span class="dots">⋮</span>
+    </div>
+    <div class="card-body">
+      <div class="labels">
+        <span>نوع امتحان</span>
+        <span>تاریخ</span>
+        <span>نمره</span>
+      </div>
+      <div class="values">
+        <span>ماهانه</span>
+        <span>یکشنبه 20 مهر ۱۴۰۴</span>
+        <span>19.0</span>
+      </div>
+    </div>
+  </div>
+
+
+ <!-- کارت دوم -->
+<div class="card" data-subject="نگارش 1" data-type="پرسش کلاسی" data-teacher="محسن ابراهیم‌پور" data-date="شنبه 19 مهر 1404" data-score="19/20" >
+    <div class="card-header">
+      <div>
+        <span class="subject">نگارش</span>
+        <span class="badge">عادی</span>
+      </div>
+      <span class="dots">⋮</span>
+    </div>
+    <div class="card-body">
+      <div class="labels">
+        <span>نوع امتحان</span>
+        <span>تاریخ</span>
+        <span>نمره</span>
+      </div>
+      <div class="values">
+        <span>ماهانه</span>
+        <span>شنبه 19 مهر ۱۴۰۴</span>
+        <span>19.0</span>
+      </div>
+    </div>
+  </div>
+
+ <!-- کارت دوم -->
+<div class="card" data-subject="شیمی 1" data-type="پرسش کلاسی" data-teacher="امیررضا خشکبار" data-date="چهارشنبه 16 مهر 1404" data-score="5/5" >
+    <div class="card-header">
+      <div>
+        <span class="subject">شیمی</span>
+        <span class="badge">عادی</span>
+      </div>
+      <span class="dots">⋮</span>
+    </div>
+    <div class="card-body">
+      <div class="labels">
+        <span>نوع امتحان</span>
+        <span>تاریخ</span>
+        <span>نمره</span>
+      </div>
+      <div class="values">
+        <span>ماهانه</span>
+        <span>چهارشنبه 16 مهر ۱۴۰۴</span>
+        <span>5.0</span>
+      </div>
+    </div>
+  </div>
+
+
+ <!-- کارت دوم -->
+<div class="card" data-subject="ریاضی 1" data-type="پرسش کلاسی" data-teacher="وحید جوادی‌فر" data-date="دوشنبه 14 مهر 1404" data-score="20/20" >
+    <div class="card-header">
+      <div>
+        <span class="subject">ریاضی</span>
+        <span class="badge">عادی</span>
+      </div>
+      <span class="dots">⋮</span>
+    </div>
+    <div class="card-body">
+      <div class="labels">
+        <span>نوع امتحان</span>
+        <span>تاریخ</span>
+        <span>نمره</span>
+      </div>
+      <div class="values">
+        <span>پرسش کلاسی</span>
+        <span>دوشنبه 14 مهر ۱۴۰۴</span>
+        <span>20.0</span>
+      </div>
+    </div>
+  </div>
+
+ <!-- کارت دوم -->
+<div class="card" data-subject="جغرافیای عمومی و استان شناسی 1" data-type="پرسش کلاسی" data-teacher="علیرضا صابری" data-date="یکشنبه 13 مهر 1404" data-score="18/20" >
+    <div class="card-header">
+      <div>
+        <span class="subject">جغرافیای عمومی و استان شناسی</span>
+        <span class="badge">عادی</span>
+      </div>
+      <span class="dots">⋮</span>
+    </div>
+    <div class="card-body">
+      <div class="labels">
+        <span>نوع امتحان</span>
+        <span>تاریخ</span>
+        <span>نمره</span>
+      </div>
+      <div class="values">
+        <span>پرسش کلاسی</span>
+        <span>یکشنبه 13 مهر ۱۴۰۴</span>
+        <span>18.0</span>
+      </div>
+    </div>
+  </div>
+
+
+ <!-- کارت دوم -->
+<div class="card" data-subject="عربی 1" data-type="پرسش کلاسی" data-teacher="محمد دیبا" data-date="شنبه 12 مهر 1404" data-score="5/5" >
+    <div class="card-header">
+      <div>
+        <span class="subject">عربی</span>
+        <span class="badge">عادی</span>
+      </div>
+      <span class="dots">⋮</span>
+    </div>
+    <div class="card-body">
+      <div class="labels">
+        <span>نوع امتحان</span>
+        <span>تاریخ</span>
+        <span>نمره</span>
+      </div>
+      <div class="values">
+        <span>پرسش کلاسی</span>
+        <span>شنبه 12 مهر ۱۴۰۴</span>
+        <span>5.0</span>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+
+
+
+
+
+<div class="modal" id="detailsModal">
+  <div class="modal-content">
+    <span class="close">&times;</span>
+    <h3>جزئیات آزمون</h3>
+    <p></p> <!-- درس -->
+    <p></p> <!-- نوع امتحان -->
+    <p></p> <!-- معلم -->
+    <p></p> <!-- تاریخ --> 
+    <p></p> <!-- نمره -->
+   
+  </div>
+</div>
+
+
+<script>
+const modal = document.getElementById("detailsModal");
+const modalContent = modal.querySelector(".modal-content");
+const closeModal = modalContent.querySelector(".close");
+
+document.querySelectorAll(".card").forEach(card => {
+  const dots = card.querySelector(".dots");
+  dots.addEventListener("click", (e) => {
+    e.stopPropagation();
+
+    const subject = card.dataset.subject;
+    const type = card.dataset.type;
+    const date = card.dataset.date;
+    const score = card.dataset.score;
+    const teacher = card.dataset.teacher;
+
+    const paragraphs = modalContent.querySelectorAll("p");
+    paragraphs[0].textContent = "درس: " + subject;
+    paragraphs[1].textContent = "نوع امتحان: " + type;
+    paragraphs[2].textContent = "معلم: " + teacher;
+    paragraphs[3].textContent = "تاریخ: " + date;
+    paragraphs[4].textContent = "نمره: " + score;
+
+    modal.style.display = "flex";
+  });
+});
+
+// بستن مودال با × یا کلیک روی پشت مودال
+closeModal.addEventListener("click", () => modal.style.display = "none");
+modal.addEventListener("click", (e) => {
+  if (e.target === modal) modal.style.display = "none";
+});
+
+</script>
+
+
+  <script>
+    const receivedTab = document.getElementById("receivedTab");
+    const sentTab = document.getElementById("sentTab");
+    const content = document.getElementById("content");
+
+    const receivedHTML = `
+
+
+<div class="cards-container">
+   <!-- کارت دوم -->
+<div class="card" data-subject="عربی 1" data-type="پرسش کلاسی" data-teacher="محمد دیبا" data-date="شنبه 10 آبان 1404" data-score="2.5/5" >
+    <div class="card-header">
+      <div>
+        <span class="subject">عربی</span>
+        <span class="badge">عادی</span>
+      </div>
+      <span class="dots">⋮</span>
+    </div>
+    <div class="card-body">
+      <div class="labels">
+        <span>نوع امتحان</span>
+        <span>تاریخ</span>
+        <span>نمره</span>
+      </div>
+      <div class="values">
+        <span>پرسش کلاسی</span>
+        <span>شنبه 10 آبان ۱۴۰۴</span>
+        <span>2.5</span>
+      </div>
+    </div>
+  </div>
+  <!-- کارت اول -->
+    <!-- کارت دوم -->
+<div class="card" data-subject="فارسی 1" data-type="پرسش شفاهی" data-teacher="محسن ابراهیم‌پور" data-date="چهارشنبه 7 آبان 1404" data-score="19/20" >
+    <div class="card-header">
+      <div>
+        <span class="subject">فارسی</span>
+        <span class="badge">عادی</span>
+      </div>
+      <span class="dots">⋮</span>
+    </div>
+    <div class="card-body">
+      <div class="labels">
+        <span>نوع امتحان</span>
+        <span>تاریخ</span>
+        <span>نمره</span>
+      </div>
+      <div class="values">
+        <span>پرسش شفاهی</span>
+        <span>چهارشنبه 7 آبان ۱۴۰۴</span>
+        <span>19.0</span>
+      </div>
+    </div>
+  </div>
+
+<div class="card" data-subject="فیزیک 1" data-type="پرسش کلاسی" data-teacher="مهدی فتاحی" data-date="سه‌شنبه 6 آبان 1404" data-score="20/20" >
+    <div class="card-header">
+      <div>
+        <span class="subject">فیزیک</span>
+        <span class="badge">عادی</span>
+      </div>
+      <span class="dots">⋮</span>
+    </div>
+    <div class="card-body">
+      <div class="labels">
+        <span>نوع امتحان</span>
+        <span>تاریخ</span>
+        <span>نمره</span>
+      </div>
+      <div class="values">
+        <span>پرسش کلاسی</span>
+        <span>سه‌شنبه 6 آبان ۱۴۰۴</span>
+        <span>20</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- کارت دوم -->
+<div class="card" data-subject="ریاضی 1" data-type="ماهانه" data-teacher="جوادی‌فر" data-date="دوشنبه 5 آبان 1404" data-score="9/20" >
+    <div class="card-header">
+      <div>
+        <span class="subject">ریاضی</span>
+        <span class="badge">عادی</span>
+      </div>
+      <span class="dots">⋮</span>
+    </div>
+    <div class="card-body">
+      <div class="labels">
+        <span>نوع امتحان</span>
+        <span>تاریخ</span>
+        <span>نمره</span>
+      </div>
+      <div class="values">
+        <span>ماهانه</span>
+        <span>دوشنبه 5 آبان ۱۴۰۴</span>
+        <span>9</span>
+      </div>
+    </div>
+  </div>
+
+
+ <!-- کارت دوم -->
+<div class="card" data-subject="نگارش 1" data-type="پرسش کلاسی" data-teacher="محسن ابراهیم‌پور" data-date="شنبه 3 آبان 1404" data-score="19/20" >
+    <div class="card-header">
+      <div>
+        <span class="subject">نگارش</span>
+        <span class="badge">عادی</span>
+      </div>
+      <span class="dots">⋮</span>
+    </div>
+    <div class="card-body">
+      <div class="labels">
+        <span>نوع امتحان</span>
+        <span>تاریخ</span>
+        <span>نمره</span>
+      </div>
+      <div class="values">
+        <span>پرسش کلاسی</span>
+        <span>سه‌شنبه 3 آبان ۱۴۰۴</span>
+        <span>19</span>
+      </div>
+    </div>
+  </div>
+
+
+ <!-- کارت دوم -->
+<div class="card" data-subject="عربی 1" data-type="ازمون کلاسی" data-teacher="محمد دیبا" data-date="شنبه 3 آبان 1404" data-score="17.5/20" >
+    <div class="card-header">
+      <div>
+        <span class="subject">عربی</span>
+        <span class="badge">عادی</span>
+      </div>
+      <span class="dots">⋮</span>
+    </div>
+    <div class="card-body">
+      <div class="labels">
+        <span>نوع امتحان</span>
+        <span>تاریخ</span>
+        <span>نمره</span>
+      </div>
+      <div class="values">
+        <span>ازمون کلاسی</span>
+        <span>سه‌شنبه 3 آبان ۱۴۰۴</span>
+        <span>17.5</span>
+      </div>
+    </div>
+  </div>
+
+
+ <!-- کارت دوم -->
+<div class="card" data-subject="زبان 1" data-type="پرسش کلاسی" data-teacher="محمد علی‌زاده" data-date="یک‌شنبه 27 مهر 1404" data-score="16.5/20" >
+    <div class="card-header">
+      <div>
+        <span class="subject">زبان خارجی</span>
+        <span class="badge">عادی</span>
+      </div>
+      <span class="dots">⋮</span>
+    </div>
+    <div class="card-body">
+      <div class="labels">
+        <span>نوع امتحان</span>
+        <span>تاریخ</span>
+        <span>نمره</span>
+      </div>
+      <div class="values">
+        <span>پرسش کلاسی</span>
+        <span>یک‌شنبه 3 مهر ۱۴۰۴</span>
+        <span>16.5</span>
+      </div>
+    </div>
+  </div>
+
+
+
+<div class="card" data-subject="امادگی دفاعی 1" data-type="پرسش کلاسی" data-teacher="احمد رضا قلی زاده" data-date="دوشنبه 21 مهر 1404" data-score="19/20" >
+    <div class="card-header">
+      <div>
+        <span class="subject">امادگی دفاعی</span>
+        <span class="badge">عادی</span>
+      </div>
+      <span class="dots">⋮</span>
+    </div>
+    <div class="card-body">
+      <div class="labels">
+        <span>نوع امتحان</span>
+        <span>تاریخ</span>
+        <span>نمره</span>
+      </div>
+      <div class="values">
+        <span>پرسش کلاسی</span>
+        <span>دوشنبه 21 مهر ۱۴۰۴</span>
+        <span>19.0</span>
+      </div>
+    </div>
+  </div>
+
+
+
+ <!-- کارت دوم -->
+<div class="card" data-subject="فیزیک 1" data-type="کوییز" data-teacher="مهدی فتاحی" data-date="دوشنبه 21 مهر 1404" data-score="18/20" >
+    <div class="card-header">
+      <div>
+        <span class="subject">فیزیک</span>
+        <span class="badge">عادی</span>
+      </div>
+      <span class="dots">⋮</span>
+    </div>
+    <div class="card-body">
+      <div class="labels">
+        <span>نوع امتحان</span>
+        <span>تاریخ</span>
+        <span>نمره</span>
+      </div>
+      <div class="values">
+        <span>کوییز</span>
+        <span>دوشنبه 21 مهر ۱۴۰۴</span>
+        <span>18.0</span>
+      </div>
+    </div>
+  </div>
+
+
+
+
+ <!-- کارت دوم -->
+<div class="card" data-subject="عربی 1" data-type="آزمون اغازین" data-teacher="محمد دیبا" data-date="شنبه 12 مهر 1404" data-score="9/10" >
+    <div class="card-header">
+      <div>
+        <span class="subject">عربی</span>
+        <span class="badge">عادی</span>
+      </div>
+      <span class="dots">⋮</span>
+    </div>
+    <div class="card-body">
+      <div class="labels">
+        <span>نوع امتحان</span>
+        <span>تاریخ</span>
+        <span>نمره</span>
+      </div>
+      <div class="values">
+        <span>ازمون اغازین</span>
+        <span>شنبه 12 مهر ۱۴۰۴</span>
+        <span>9.0</span>
+      </div>
+    </div>
+  </div>
+
+ <!-- کارت دوم -->
+<div class="card" data-subject="زبان خارجی 1" data-type="آزمون اغازین" data-teacher="محمد علی‌زاده" data-date="شنبه 12 مهر 1404" data-score="8/10" >
+    <div class="card-header">
+      <div>
+        <span class="subject">زبان</span>
+        <span class="badge">عادی</span>
+      </div>
+      <span class="dots">⋮</span>
+    </div>
+    <div class="card-body">
+      <div class="labels">
+        <span>نوع امتحان</span>
+        <span>تاریخ</span>
+        <span>نمره</span>
+      </div>
+      <div class="values">
+        <span>ازمون اغازین</span>
+        <span>شنبه 12 مهر ۱۴۰۴</span>
+        <span>8.0</span>
+      </div>
+    </div>
+  </div>
+
+
+ <!-- کارت دوم -->
+<div class="card" data-subject="ریاضی 1" data-type="آزمون اغازین" data-teacher="وحید جوادی‌فر" data-date="شنبه 12 مهر 1404" data-score="6/10" >
+    <div class="card-header">
+      <div>
+        <span class="subject">ریاضی</span>
+        <span class="badge">عادی</span>
+      </div>
+      <span class="dots">⋮</span>
+    </div>
+    <div class="card-body">
+      <div class="labels">
+        <span>نوع امتحان</span>
+        <span>تاریخ</span>
+        <span>نمره</span>
+      </div>
+      <div class="values">
+        <span>ازمون اغازین</span>
+        <span>شنبه 12 مهر ۱۴۰۴</span>
+        <span>6.0</span>
+      </div>
+    </div>
+  </div>
+
+
+
+ <!-- کارت دوم -->
+<div class="card" data-subject="تعلیمات دینی 1" data-type="آزمون اغازین" data-teacher="یوسف کاضمی" data-date="شنبه 12 مهر 1404" data-score="5/10" >
+    <div class="card-header">
+      <div>
+        <span class="subject">تعلیمات دینی</span>
+        <span class="badge">عادی</span>
+      </div>
+      <span class="dots">⋮</span>
+    </div>
+    <div class="card-body">
+      <div class="labels">
+        <span>نوع امتحان</span>
+        <span>تاریخ</span>
+        <span>نمره</span>
+      </div>
+      <div class="values">
+        <span>ازمون اغازین</span>
+        <span>شنبه 12 مهر ۱۴۰۴</span>
+        <span>5.0</span>
+      </div>
+    </div>
+  </div>
+
+ <!-- کارت دوم -->
+<div class="card" data-subject="ادبیات فارسی 1" data-type="آزمون اغازین" data-teacher="محسن ابراهیم‌پور" data-date="شنبه 12 مهر 1404" data-score="9/10" >
+    <div class="card-header">
+      <div>
+        <span class="subject">ادبیات فارسی</span>
+        <span class="badge">عادی</span>
+      </div>
+      <span class="dots">⋮</span>
+    </div>
+    <div class="card-body">
+      <div class="labels">
+        <span>نوع امتحان</span>
+        <span>تاریخ</span>
+        <span>نمره</span>
+      </div>
+      <div class="values">
+        <span>ازمون اغازین</span>
+        <span>شنبه 12 مهر ۱۴۰۴</span>
+        <span>9.0</span>
+      </div>
+    </div>
+  </div>
+
+
+ <!-- کارت دوم -->
+<div class="card" data-subject="آزمایشگاه علوم تجربی 1" data-type="آزمون اغازین" data-teacher="زین العابدین خلیلی" data-date="شنبه 12 مهر 1404" data-score="6/10" >
+    <div class="card-header">
+      <div>
+        <span class="subject">آزمایشگاه علوم تجربی</span>
+        <span class="badge">عادی</span>
+      </div>
+      <span class="dots">⋮</span>
+    </div>
+    <div class="card-body">
+      <div class="labels">
+        <span>نوع امتحان</span>
+        <span>تاریخ</span>
+        <span>نمره</span>
+      </div>
+      <div class="values">
+        <span>ازمون اغازین</span>
+        <span>شنبه 12 مهر ۱۴۰۴</span>
+        <span>6.0</span>
+      </div>
+    </div>
+  </div>
+
+ <!-- کارت دوم -->
+<div class="card" data-subject="جغرافیای عمومی و استان شناسی 1" data-type="ماهانه" data-teacher="علیرضا صابری" data-date="یکشنبه 20 مهر 1404" data-score="19/20" >
+    <div class="card-header">
+      <div>
+        <span class="subject">جغرافیای عمومی و استان شناسی</span>
+        <span class="badge">عادی</span>
+      </div>
+      <span class="dots">⋮</span>
+    </div>
+    <div class="card-body">
+      <div class="labels">
+        <span>نوع امتحان</span>
+        <span>تاریخ</span>
+        <span>نمره</span>
+      </div>
+      <div class="values">
+        <span>ماهانه</span>
+        <span>یکشنبه 20 مهر ۱۴۰۴</span>
+        <span>19.0</span>
+      </div>
+    </div>
+  </div>
+
+
+ <!-- کارت دوم -->
+<div class="card" data-subject="نگارش 1" data-type="پرسش کلاسی" data-teacher="محسن ابراهیم‌پور" data-date="شنبه 19 مهر 1404" data-score="19/20" >
+    <div class="card-header">
+      <div>
+        <span class="subject">نگارش</span>
+        <span class="badge">عادی</span>
+      </div>
+      <span class="dots">⋮</span>
+    </div>
+    <div class="card-body">
+      <div class="labels">
+        <span>نوع امتحان</span>
+        <span>تاریخ</span>
+        <span>نمره</span>
+      </div>
+      <div class="values">
+        <span>ماهانه</span>
+        <span>شنبه 19 مهر ۱۴۰۴</span>
+        <span>19.0</span>
+      </div>
+    </div>
+  </div>
+
+ <!-- کارت دوم -->
+<div class="card" data-subject="شیمی 1" data-type="پرسش کلاسی" data-teacher="امیررضا خشکبار" data-date="چهارشنبه 16 مهر 1404" data-score="5/5" >
+    <div class="card-header">
+      <div>
+        <span class="subject">شیمی</span>
+        <span class="badge">عادی</span>
+      </div>
+      <span class="dots">⋮</span>
+    </div>
+    <div class="card-body">
+      <div class="labels">
+        <span>نوع امتحان</span>
+        <span>تاریخ</span>
+        <span>نمره</span>
+      </div>
+      <div class="values">
+        <span>ماهانه</span>
+        <span>چهارشنبه 16 مهر ۱۴۰۴</span>
+        <span>5.0</span>
+      </div>
+    </div>
+  </div>
+
+
+ <!-- کارت دوم -->
+<div class="card" data-subject="ریاضی 1" data-type="پرسش کلاسی" data-teacher="وحید جوادی‌فر" data-date="دوشنبه 14 مهر 1404" data-score="20/20" >
+    <div class="card-header">
+      <div>
+        <span class="subject">ریاضی</span>
+        <span class="badge">عادی</span>
+      </div>
+      <span class="dots">⋮</span>
+    </div>
+    <div class="card-body">
+      <div class="labels">
+        <span>نوع امتحان</span>
+        <span>تاریخ</span>
+        <span>نمره</span>
+      </div>
+      <div class="values">
+        <span>پرسش کلاسی</span>
+        <span>دوشنبه 14 مهر ۱۴۰۴</span>
+        <span>20.0</span>
+      </div>
+    </div>
+  </div>
+
+ <!-- کارت دوم -->
+<div class="card" data-subject="جغرافیای عمومی و استان شناسی 1" data-type="پرسش کلاسی" data-teacher="علیرضا صابری" data-date="یکشنبه 13 مهر 1404" data-score="18/20" >
+    <div class="card-header">
+      <div>
+        <span class="subject">جغرافیای عمومی و استان شناسی</span>
+        <span class="badge">عادی</span>
+      </div>
+      <span class="dots">⋮</span>
+    </div>
+    <div class="card-body">
+      <div class="labels">
+        <span>نوع امتحان</span>
+        <span>تاریخ</span>
+        <span>نمره</span>
+      </div>
+      <div class="values">
+        <span>پرسش کلاسی</span>
+        <span>یکشنبه 13 مهر ۱۴۰۴</span>
+        <span>18.0</span>
+      </div>
+    </div>
+  </div>
+
+
+ <!-- کارت دوم -->
+<div class="card" data-subject="عربی 1" data-type="پرسش کلاسی" data-teacher="محمد دیبا" data-date="شنبه 12 مهر 1404" data-score="5/5" >
+    <div class="card-header">
+      <div>
+        <span class="subject">عربی</span>
+        <span class="badge">عادی</span>
+      </div>
+      <span class="dots">⋮</span>
+    </div>
+    <div class="card-body">
+      <div class="labels">
+        <span>نوع امتحان</span>
+        <span>تاریخ</span>
+        <span>نمره</span>
+      </div>
+      <div class="values">
+        <span>پرسش کلاسی</span>
+        <span>شنبه 12 مهر ۱۴۰۴</span>
+        <span>5.0</span>
+      </div>
+    </div>
+  </div>`;
+
+    const sentHTML = `
+      <div>
+  
+  </div>`;
+  
+      receivedTab.addEventListener("click", () => {
+      receivedTab.classList.add("active");
+      sentTab.classList.remove("active");
+      content.innerHTML = receivedHTML;
+    });
+
+    sentTab.addEventListener("click", () => {
+      sentTab.classList.add("active");
+      receivedTab.classList.remove("active");
+      content.innerHTML = sentHTML;
+    });
+  </script>
+</body>
+</html>

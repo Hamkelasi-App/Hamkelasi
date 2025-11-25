@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <title>Hamkelasi</title>
+  <style>
+    * {
+      box-sizing: border-box;
+
+    }
+
+    body {
+      margin: 0;
+      background-color: #f1f8f9;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+    html,body{height:100%;margin:0;font-family:'Vazirmatn', system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial; background: #f2f7f8;color:#1e2b2b}
+
+    /* هدر */
+    .header {
+      background-color: #00d1d1;
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 12px 16px;
+    }
+
+    .header h1 {
+      font-size: 1.1rem;
+      font-weight: bold;
+      margin: 0;
+      text-align: center;
+      flex: 1;
+    }
+
+    .icon-btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      transition: 0.2s;
+    }
+
+    .icon-btn:hover {
+      background-color: rgba(255, 255, 255, 0.15);
+    }
+
+    .icon-btn img {
+      width: 40px;
+      height: 40px;
+      object-fit: contain;
+    }
+
+/* تب‌ها */
+.tabs {
+  display: flex;
+  flex-direction: row-reverse; /* تب‌ها برعکس می‌شن */
+  background-color: #00d1d1;
+  color: white;
+  font-weight: bold;
+}
+
+    .tab {
+      flex: 1;
+      text-align: center;
+      padding: 12px 0;
+      border-bottom: 4px solid transparent;
+      cursor: pointer;
+      transition: 0.3s;
+      font-size: 1rem;
+    }
+
+    .tab.active {
+      border-color: white;
+    }
+
+    /* لیست پیام‌ها */
+    .content {
+      flex: 1;
+      padding: 16px;
+      overflow-y: auto;
+    }
+
+    .message-card {
+      background: white;
+      border-radius: 14px;
+      padding: 14px;
+      margin-bottom: 10px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+      transition: 0.2s;
+      text-decoration: none;
+      color: inherit;
+    }
+
+    .message-card:hover {
+      transform: translateY(-2px);
+    }
+
+    .message-info {
+      flex: 1;
+    }
+
+    .message-info p {
+      margin: 2px 0;
+      color: #444;
+      font-size: 0.9rem;
+    }
+
+    .message-info .title {
+      font-weight: 600;
+      color: #222;
+    }
+
+    .message-info .meta {
+      color: #777;
+      font-size: 0.8rem;
+    }
+
+    .avatar {
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      background-color: #ddd;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .avatar img {
+      width: 70%;
+      height: 70%;
+      object-fit: cover;
+    }
+
+    /* دکمه شناور */
+    .fab {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      background-color: #00d1d1;
+      color: white;
+      width: 56px;
+      height: 56px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2rem;
+      border: none;
+      cursor: pointer;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+      transition: 0.3s;
+      text-decoration: none;
+    }
+
+    .fab:hover {
+      transform: scale(1.1);
+    }
+
+    /* واکنش‌گرا */
+    @media (max-width: 600px) {
+      .header h1 {
+        font-size: 1rem;
+      }
+      .avatar {
+        width: 40px;
+        height: 40px;
+      }
+      .tab {
+        font-size: 0.9rem;
+      }
+      .icon-btn img {
+        width: 35px;
+        height: 35px;
+      }
+    }
+          .card {
+    background: #fff;
+    width: 100%;
+    max-width: 700px; /* 🔹 باکس بزرگ‌تر شد */
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    border-radius: 16px;
+    box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+    padding: 6px;
+    box-sizing: border-box;
+  }
+
+  .card-header {
+    background: #f3f9f9;
+    border-radius: 14px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-direction: row-reverse;
+    padding: 10px 14px;
+    margin-bottom: 10px;
+  }
+
+  /* 🔹 عنوان و وضعیت سمت راست و کاملاً چسبیده */
+  .card-right {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    text-align: right;
+    direction: rtl;
+    margin-right: 0; /* هیچ فاصله‌ای از راست نباشد */
+  }
+
+.card-status {
+  align-self: flex-end;
+  margin-left: auto;
+  background-color: #00d1d1;
+  color: #fff;
+  font-size: 11px;
+  padding: 3px 10px;
+  border-radius: 4px;
+  display: inline-block;
+}
+
+  .card-status {
+    background-color: #00d1d1;
+    color: #fff;
+    font-size: 11px;
+    padding: 3px 10px;
+    border-radius: 8px;
+    display: inline-block;
+    align-self: flex-end;
+    
+  }
+
+  /* 🔹 سه نقطه سمت چپ */
+  .card-left {
+    font-size: 22px;
+    color: #00d1d1;
+    transform: rotate(90deg);
+    user-select: none;
+    cursor: pointer;
+    margin-left: 0; /* چسبیده به چپ */
+  }
+
+  .card-body {
+    padding: 8px 10px 14px 10px;
+    font-size:12px;
+    line-height: 1.5;
+  }
+
+  .info-row {
+    display: flex;
+    justify-content: space-between;
+    margin: 4px 0;
+  }
+
+  .info-label { color: #b9b9b9; }
+  .info-value { color: #000; font-weight: 400; }
+
+  /* واکنش‌گرا */
+  @media (max-width: 768px) {
+    .card { max-width: 90%; }
+  }
+
+  @media (max-width: 700px) {
+    .card { max-width: 100%; }
+    .card-title { font-size: 13px; }
+    .card-status { font-size: 9.5px; }
+  }
+
+
+  </style>
+</head>
+
+<body>
+  <!-- هدر -->
+  <div class="header">
+    <!-- فلش برگشت با لینک -->
+    <a href="index.html" class="icon-btn">
+      <img src="18.png" alt="Back" />
+    </a>
+
+    <h1>مدیریت پیام‌ها</h1>
+
+    <!-- سه‌نقطه با لینک -->
+    <a href="#" class="icon-btn">
+      <img src="17.png" alt="Menu" />
+    </a>
+  </div>
+
+<!-- تب‌ها -->
+<div class="tabs">
+  <div id="receivedTab" class="tab active">دریافتی</div>
+  <div id="sentTab" class="tab">ارسالی</div>
+</div>
+  <!-- محتوای تب‌ها -->
+  <div id="content" class="content">
+      <div class="message-info">
+        <p class="title"></p>
+      </div>
+
+
+<div class="card">
+  <div class="card-header">
+    <!-- سه نقطه سمت چپ -->
+    <div class="card-left">⋮</div>
+
+    <!-- عنوان و وضعیت سمت راست -->
+    <div class="card-right">
+      <div class="card-title">برنامه امتحانات 45 روزه</div>
+      
+    </div>
+  </div>
+
+  <div class="card-body">
+    <div class="info-row">
+      <div class="info-label">تاریخ و زمان</div>
+      <div class="info-value">10:44 یکشنبه 11 آبان 1404</div>
+    </div>
+    <div class="info-row">
+      <div class="info-label">تاریخ</div>
+      <div class="info-value">دوشنبه ۲۱ مهر ۱۴۰۴</div>
+    </div>
+  </div>
+</div>
+
+
+
+  <script>
+    const receivedTab = document.getElementById("receivedTab");
+    const sentTab = document.getElementById("sentTab");
+    const content = document.getElementById("content");
+
+    const receivedHTML = `
+<div class="card">
+  <div class="card-header">
+    <!-- سه نقطه سمت چپ -->
+    <div class="card-left">⋮</div>
+
+    <!-- عنوان و وضعیت سمت راست -->
+    <div class="card-right">
+      <div class="card-title">برنامه امتحانات 45 روزه</div>
+      
+    </div>
+  </div>
+
+  <div class="card-body">
+    <div class="info-row">
+      <div class="info-label">تاریخ و زمان</div>
+      <div class="info-value">10:44 یکشنبه 11 آبان 1404</div>
+    </div>
+    <div class="info-row">
+      <div class="info-label">تاریخ</div>
+      <div class="info-value">دوشنبه ۲۱ مهر ۱۴۰۴</div>
+    </div>
+  </div>
+</div>`;
+
+    const sentHTML = `
+      </a>`;
+
+    receivedTab.addEventListener("click", () => {
+      receivedTab.classList.add("active");
+      sentTab.classList.remove("active");
+      content.innerHTML = receivedHTML;
+    });
+
+    sentTab.addEventListener("click", () => {
+      sentTab.classList.add("active");
+      receivedTab.classList.remove("active");
+      content.innerHTML = sentHTML;
+    });
+  </script>
+</body>
+</html>

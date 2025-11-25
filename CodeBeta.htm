@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Hamkelasi</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <link rel="manifest" href="manifest.json">
+  <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    body {
+      margin: 0;
+      font-family: "Vazirmatn", sans-serif;
+      background-color: #f2f7f8;
+      direction: rtl;
+      color: #333;
+      padding-bottom: 90px;
+      font-weight: 400;
+    }
+    html, body {
+      height: 100%;
+      margin: 0;
+      font-family: 'Vazirmatn', system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial;
+      background: #f2f7f8;
+      color: #1e2b2b;
+    }
+
+    /* ===== HEADER ===== */
+    .header {
+      background-color: #00d1d1;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 10px 20px;
+      height: 40px;
+    }
+
+    .header-logo {
+      height: 50px !important;
+    }
+
+    .menu-icon img, .bell-icon img {
+      width: 42px !important;
+      height: 42px !important;
+    }
+
+    /* ===== GRID MENU ===== */
+    .menu-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      column-gap: 10px;
+      row-gap: 10px;
+      padding: 10px;
+      justify-items: center;
+    }
+
+    .menu-item {
+      background: #fff;
+      border: 1px solid #e2e2e2;
+      border-radius: 12px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+      width: 120px;
+      height: 120px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      cursor: pointer;
+      overflow: hidden;
+      transition: transform 0.2s, box-shadow 0.2s;
+      position: relative;
+      text-decoration: none;
+    }
+
+    .menu-item:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    }
+
+    /* باکس فیروزه‌ای داخلی */
+    .inner-box {
+      background-color: #f3f9f9;
+      width: 110px;
+      height: 150px;
+      margin-top: 10px;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      overflow: hidden;
+      transition: all 0.2s ease;
+    }
+
+    .menu-item span {
+      margin: 2px 0 6px;
+      color: #333;
+      font-size: 12px;
+      font-weight: 400;
+      pointer-events: none;
+    }
+
+    .icon-img {
+      width: 135%;
+      height: auto;
+      object-fit: contain;
+      pointer-events: none;
+    }
+
+    /* کوچک شدن حاشیه فیروزه‌ای هنگام فعال شدن */
+    .menu-item.active-item .inner-box {
+      width: 90px;
+      height: 120px;
+    }
+
+    /* ===== BOTTOM NAV ===== */
+    .bottom-nav {
+      position: fixed;
+      bottom: 10px; /* بالاتر */
+      right: 0;
+      left: 0;
+      background: white;
+      border-top-left-radius: 25px;
+      border-top-right-radius: 25px;
+      box-shadow: 0 -2px 10px rgba(0,0,0,0.08);
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+      height: 70px;
+      padding: 0 15px;
+      z-index: 100;
+    }
+
+    .nav-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      color: #bfbfbf;
+      font-size: 10px;
+      flex: 1;
+      transition: all 0.2s ease;
+      cursor: pointer;
+      font-weight: 400;
+      
+    }
+
+    .nav-item span {
+      display: none;
+    }
+
+    .nav-item.active {
+      flex-direction: row;
+     gap: 2px;             
+    background: #00d1d1;
+     color: white;
+    padding: 3px 9px;    
+    border-radius: 25px;  
+    transition: all 0.2s ease;
+    min-width: 110px;  /* طول دلخواه */
+    justify-content: flex-start; /* میره سمت چپ */
+    padding-left: 12px;         /* فاصله از لبه چپ */
+
+
+    }
+    .nav-item.active span {
+      display: inline;
+      font-size: 13px;
+      color: white;
+    }
+
+    .nav-icon {
+      width: 35px;
+      height: 35px;
+      object-fit: contain;
+      filter: grayscale(100%) brightness(0.7);
+      transition: all 0.2s ease;
+    }
+
+    .nav-item.active .nav-icon {
+      filter: none;
+    }
+
+    /* ریسپانسیو */
+    @media (max-width: 600px) {
+      .menu-grid {
+        row-gap: 10px !important;
+        column-gap: 10px !important;
+        padding: 10px !important;
+      }
+
+      .menu-item {
+        width: 125px !important;
+        height: 105px !important;
+      }
+
+      .inner-box {
+        width: 110px !important;
+        height: 110px !important;
+        margin-top: 10px !important;
+      }
+    }
+
+    .container {
+      display: flex;
+      justify-content: center;
+      margin: 0;
+      margin-bottom: 2px;
+    }
+
+    .center-image {
+      width: 410px;
+      height: auto;
+    }
+    /* آیکن زنگوله */
+    .bell-icon img {
+     width: 30px !important;
+     height: 35px !important;
+    }
+
+  </style>
+</head>
+<body>
+
+<header class="header">
+  <div class="menu-icon">
+    <img src="15.png" alt="منو">
+  </div>
+  <img src="Screenshot 2025-10-28 232821.png" alt="لوگو" class="header-logo">
+  <div class="bell-icon">
+    <img src="30.png" alt="اعلان‌ها">
+  </div>
+</header>
+
+<div class="container">
+  <img src="22.png" class="center-image">
+</div>
+
+<div class="menu-grid">
+  <a href="Barnamehaftegy.html" class="menu-item">
+    <div class="inner-box">
+      <img src="3.png" alt="برنامه کلاسی" class="icon-img">
+    </div>
+    <span>برنامه کلاسی</span>
+  </a>
+  <a href="Barnameamtehany.html" class="menu-item">
+    <div class="inner-box">
+      <img src="1.png" alt="برنامه امتحانی" class="icon-img">
+    </div>
+    <span>برنامه امتحانی</span>
+  </a>
+  <a href="Gozaresh.html" class="menu-item">
+    <div class="inner-box">
+      <img src="6.png" alt="گزارش" class="icon-img">
+    </div>
+    <span>گزارش</span>
+  </a>
+  <a href="Mohtavaamozeshy.html" class="menu-item">
+    <div class="inner-box">
+      <img src="7.png" alt="محتوای آموزشی" class="icon-img">
+    </div>
+    <span>محتوای آموزشی</span>
+  </a>
+  <a href="Anzabat.html" class="menu-item">
+    <div class="inner-box">
+      <img src="9.png" alt="موارد انضباطی" class="icon-img">
+    </div>
+    <span>موارد انضباطی</span>
+  </a>
+  <a href="Takalif.html" class="menu-item">
+    <div class="inner-box">
+      <img src="5.png" alt="تکالیف" class="icon-img">
+    </div>
+    <span>تکالیف</span>
+  </a>
+</div>
+
+<nav class="bottom-nav">
+  <div class="nav-item active" id="home">
+    <img src="10.png" alt="خانه" class="nav-icon">
+    <span>همکلاسی</span>
+  </div>
+  <div class="nav-item" id="chat">
+    <img src="11.png" alt="گفت‌وگو" class="nav-icon">
+    <span>چت باکس</span>
+  </div>
+  <div class="nav-item" id="media">
+    <img src="12.png" alt="گالری" class="nav-icon">
+    <span>رسانه</span>
+  </div>
+  <div class="nav-item" id="calendar">
+    <img src="13.png" alt="تقویم" class="nav-icon">
+    <span>تقویم</span>
+  </div>
+</nav>
+
+<script>
+  // فعال‌سازی نوار پایین
+  const navItems = document.querySelectorAll('.nav-item');
+  navItems.forEach(item => {
+    item.addEventListener('click', () => {
+      navItems.forEach(i => i.classList.remove('active'));
+      item.classList.add('active');
+    });
+  });
+
+  // Ripple Effect برای باکس‌ها
+  document.querySelectorAll(".inner-box").forEach(box => {
+    box.addEventListener("click", function(e) {
+      const ripple = document.createElement("span");
+      ripple.classList.add("ripple");
+      const rect = this.getBoundingClientRect();
+      const size = Math.max(rect.width, rect.height);
+      ripple.style.width = ripple.style.height = size + "px";
+      ripple.style.left = e.clientX - rect.left - size / 2 + "px";
+      ripple.style.top = e.clientY - rect.top - size / 2 + "px";
+      this.appendChild(ripple);
+      setTimeout(() => ripple.remove(), 600);
+    });
+  });
+
+  // کوچک کردن باکس فیروزه‌ای هنگام کلیک
+  const menuItems = document.querySelectorAll('.menu-item');
+  menuItems.forEach(item => {
+    item.addEventListener('click', () => {
+      menuItems.forEach(i => i.classList.remove('active-item'));
+      item.classList.add('active-item');
+    });
+  });
+</script>
+
+</body>
+</html>

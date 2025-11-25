@@ -1,0 +1,535 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Hamkelasi</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <link rel="manifest" href="manifest.json">
+  <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+
+
+  <style>
+   /* --- تنظیمات پایه --- */
+body {
+  margin: 0;
+  font-family: "Vazirmatn", sans-serif;
+  background-color: #f2f7f8;
+  direction: rtl;
+  color: #333;
+  padding-bottom: 90px; /* جا برای نوار پایین */
+  font-weight: 400; /* 👈 تمام متن‌ها نازک و یکنواخت */
+}
+    html,body{height:100%;margin:0;font-family:'Vazirmatn', system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial;  background: #f2f7f8;;color:#1e2b2b}
+
+/* ======= HEADER ======= */
+.header {
+  background-color: #00d1d1;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 4px 16px;
+  position: relative;
+  height: 65px; /* 👈 ارتفاع کمتر از قبل */
+}
+.header {
+  height: 40px !important;   /* 👈 ارتفاع جدید (قبلاً 60px بود) */
+  padding: 10px 20px !important; /* 👈 فاصله داخلی بیشتر */
+}
+/* ==== اندازه نهایی لوگو و آیکن‌ها ==== */
+
+/* لوگوی وسط */
+.header-logo {
+  height: 50px !important;  /* 👈 بزرگ‌تر و ثابت */
+}
+
+/* آیکن سه‌خطی */
+.menu-icon img {
+  width: 42px !important;
+  height: 42px !important;
+}
+
+/* آیکن زنگوله */
+.bell-icon img {
+  width: 42px !important;
+  height: 42px !important;
+}
+
+
+
+/* واکنش‌گرا برای موبایل */
+@media (max-width: 600px) {
+  .header {
+    height: 50px;
+    padding: 3px 12px;
+  }
+  .header-logo {
+    height: 32px;
+  }
+  .menu-icon img, .bell-icon img {
+    width: 22px;
+    height: 22px;
+  }
+  .notification-badge {
+    width: 14px;
+    height: 14px;
+    font-size: 9px;
+  }
+}
+
+/* --- عنوان صفحه --- */
+.header .main-title {
+  font-size: 18px;
+  font-weight: 400;
+  margin-bottom: 6px;
+}
+
+.header .school-name {
+  font-size: 14px;
+  font-weight: 400;
+  color: #eafcfc;
+}
+
+/* --- باکس مدرسه --- */
+.school-box {
+  background-color: #fff;
+  margin: 15px auto;
+  padding: 10px 15px;
+  text-align: center;
+  width: 90%;
+  border-radius: 15px;
+  border: 1px solid #e4e8eb;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+  font-size: 14px;
+  font-weight: 400;
+  color: #222;
+}
+
+/* --- چیدمان گرید باکس‌ها (۳ ستون ثابت) --- */
+
+.menu-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  column-gap: 6px;  /* فاصله افقی بین باکس‌ها */
+  row-gap: 4px;     /* 👈 فاصله عمودی دقیقاً مثل عکس اصلی */
+  padding: 4px 10px 25px;
+  justify-items: center;
+}
+
+
+
+
+/* --- باکس سفید هر گزینه --- */
+.menu-item {
+  background: #fff;
+  border: 1px solid #e2e2e2;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+  width: 100%;
+  height: 70%;
+  max-width: 180px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  cursor: pointer;
+  overflow: hidden;
+  transition: transform 0.2s, box-shadow 0.2s;
+  position: relative;
+  text-decoration: none;
+}
+
+.menu-item:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+}
+
+/* --- باکس فیروزه‌ای داخلی --- */
+.inner-box {
+  background-color: #f3f9f9;
+  width: 125px;
+  height: 110px;
+  aspect-ratio: unset;
+  margin-top: 10px; /* قبلاً 5px بود */
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+  transition: 0.3s;
+}
+
+/* Ripple Effect */
+.ripple {
+  position: absolute;
+  border-radius: 50%;
+  transform: scale(0);
+  background: rgba(0, 209, 209, 0.35);
+  animation: ripple-animation 0.6s linear;
+  pointer-events: none;
+}
+
+@keyframes ripple-animation {
+  to {
+    transform: scale(4);
+    opacity: 0;
+  }
+}
+
+/* --- آیکن تصویری داخل باکس --- */
+.icon-img {
+  width: 135%;
+  height: auto;
+  object-fit: contain;
+  pointer-events: none;
+}
+
+/* --- عنوان زیر آیکن --- */
+.menu-item span {
+  margin: 6px 0 10px;
+  color: #333;
+  font-size: 13px;
+  font-weight: 400;
+  pointer-events: none;
+}
+
+/* --- نوار پایین صفحه --- */
+.bottom-nav {
+  position: fixed;
+  bottom: 0;
+  right: 0;
+  left: 0;
+  background: white;
+  border-top-left-radius: 25px;
+  border-top-right-radius: 25px;
+  box-shadow: 0 -2px 10px rgba(0,0,0,0.08);
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  height: 70px;
+  padding: 0 15px;
+  z-index: 100;
+}
+
+.nav-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: #bfbfbf;
+  font-size: 12px;
+  flex: 1;
+  transition: all 0.2s ease;
+  cursor: pointer;
+  font-weight: 400;
+  
+}
+
+.nav-item span {
+  display: none;
+}
+
+.nav-item.active {
+  flex-direction: row;
+  gap: 8px;
+  background: #00d1d1;
+  color: white;
+  padding: 10px 18px;
+  border-radius: 40px;
+}
+
+.nav-item.active span {
+  display: inline;
+  font-size: 13px;
+  color: white;
+}
+
+/* --- آیکن‌های تصویری نوار پایین --- */
+.nav-icon {
+  width: 35px;
+  height: 35px;
+  object-fit: contain;
+  filter: grayscale(100%) brightness(0.7);
+  transition: all 0.2s ease;
+}
+
+.nav-item.active .nav-icon {
+  filter: none;
+}
+
+/* --- حالت واکنش‌گرا (برای موبایل) --- */
+@media (max-width: 600px) {
+  .menu-grid {
+  row-gap: 0px !important;
+  padding-top: 0 !important;
+  padding-bottom: 0 !important;
+  
+
+  }
+
+  .menu-item {
+    max-width: 120px;
+    margin: 10;
+  }
+
+  .inner-box {
+    width: 85%;
+    margin-top: 25% important;
+  }
+
+  .menu-item span {
+    margin-bottom: 4px; /* 👈 به‌جای 10px یا 6px */
+    font-size: 12px;
+    margin: 0 !important; /* قبلاً 6px 0 10px بود */
+
+  }
+
+  .bottom-nav {
+    height: 65px;
+  }
+
+  .nav-item.active {
+    padding: 5px 10px;
+    font-size: 12px;
+  }
+}
+.container {
+  display: flex;
+  justify-content: center;
+  margin: 0;          /* فاصله بالا صفر */
+  margin-bottom: 2px; /* فاصله خیلی کم زیر عکس */
+}
+.center-image {
+  width: 400px;       /* سایز دلخواه عکس */
+  height: auto;
+}
+
+  </style>
+</head>
+<body>
+  <!-- ===== HEADER ===== -->
+
+
+
+<header class="header">
+  <!-- آیکن سه‌خطی سمت راست -->
+  <div class="menu-icon">
+    <img src="15.png" alt="منو">
+  </div>
+
+  <!-- لوگو وسط -->
+  <img src="Screenshot 2025-10-28 232821.png" alt="لوگو" class="header-logo">
+
+  <!-- زنگوله سمت چپ -->
+  <div class="bell-icon">
+    <img src="14.png" alt="اعلان‌ها">
+  </div>
+</header>
+
+
+
+
+
+
+
+
+  <!-- ===== SCHOOL BOX ===== -->
+<div class="container">
+  <img src="22.png" class="center-image">
+</div>
+  <!-- ===== GRID MENU ===== -->
+ 
+ 
+   <!-- هدر بالای صفحه -->
+  
+
+  <!-- گرید آیکون‌ها -->
+  <div class="menu-grid">
+
+    <a href="Barnamehaftegy.html" class="menu-item">
+<div class="inner-box">
+  <img src="3.png" alt="برنامه کلاسی" class="icon-img">
+</div>
+      <span>برنامه کلاسی</span>
+    </a>
+
+    <a href="Payamha.html" class="menu-item">
+<div class="inner-box">
+  <img src="2.png" alt="برنامه کلاسی" class="icon-img">
+</div>
+      <span>پیام ها</span>
+    </a>
+
+    <a href="Barnameamtehany.html" class="menu-item">
+<div class="inner-box">
+  <img src="1.png" alt="برنامه کلاسی" class="icon-img">
+</div>
+      <span>برنامه امتحانی</span>
+    </a>
+
+    <a href="Gozaresh.html" class="menu-item">
+<div class="inner-box">
+  <img src="6.png" alt="برنامه کلاسی" class="icon-img">
+</div>
+      <span>گزارش</span>
+    </a>
+
+    <a href="Mohtavaamozeshy.html" class="menu-item">
+<div class="inner-box">
+  <img src="7.png" alt="برنامه کلاسی" class="icon-img">
+</div>
+      <span>محتوای آموزشی</span>
+    </a>
+
+    <a href="Nomarat.html" class="menu-item">
+<div class="inner-box">
+  <img src="8.png" alt="برنامه کلاسی" class="icon-img">
+</div>
+      <span>نمرات</span>
+    </a>
+
+    <a href="Anzabat.html" class="menu-item">
+<div class="inner-box">
+  <img src="9.png" alt="برنامه کلاسی" class="icon-img">
+</div>
+      <span>موارد انضباطی</span>
+    </a>
+
+    <a href="Karnameh.html" class="menu-item">
+<div class="inner-box">
+  <img src="4.png" alt="برنامه کلاسی" class="icon-img">
+</div>
+      <span>دریافت کارنامه</span>
+    </a>
+
+    <a href="Takalif.html" class="menu-item">
+<div class="inner-box">
+  <img src="5.png" alt="برنامه کلاسی" class="icon-img">
+</div>
+      <span>تکالیف</span>
+    </a>
+
+  </div>
+<!-- ===== POPUP MODAL ===== -->
+<div id="popup" class="popup-overlay">
+  <div class="popup-box">
+    <h3>پیام جدید از سوی ناصر فرجی</h3>
+    <p>
+      عدم دسترسی برای مدت یک هفته
+    </p>
+
+    <button id="closePopup" class="close-btn">بستن</button>
+  </div>
+</div>
+
+<style>
+/* پس‌زمینه تاریک */
+.popup-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.55);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 2000;
+}
+
+/* باکس سفید */
+.popup-box {
+  background: white;
+  padding: 20px;
+  width: 85%;
+  max-width: 350px;
+  border-radius: 12px;
+  text-align: center;
+  font-family: "Vazirmatn";
+  animation: fadeIn 0.35s ease;
+}
+
+/* انیمیشن ظاهر شدن */
+@keyframes fadeIn {
+  from { opacity: 0; transform: scale(0.9); }
+  to   { opacity: 1; transform: scale(1); }
+}
+
+/* دکمه بستن */
+.close-btn {
+  margin-top: 15px;
+  background-color: #00d1d1;
+  color: white;
+  border: none;
+  padding: 10px 25px;
+  font-size: 15px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-family: "Vazirmatn"; 
+}
+
+.close-btn:hover {
+  background-color: #00b3b3;
+}
+</style>
+
+<script>
+/* بستن پاپ‌آپ با دکمه */
+document.getElementById("closePopup").onclick = function() {
+  document.getElementById("popup").style.display = "none";
+};
+</script>
+
+<script>
+  // Ripple Effect برای همه باکس‌ها
+  document.querySelectorAll(".inner-box").forEach(box => {
+    box.addEventListener("click", function(e) {
+      const ripple = document.createElement("span");
+      ripple.classList.add("ripple");
+
+      const rect = this.getBoundingClientRect();
+      const size = Math.max(rect.width, rect.height);
+      ripple.style.width = ripple.style.height = size + "px";
+      ripple.style.left = e.clientX - rect.left - size / 2 + "px";
+      ripple.style.top = e.clientY - rect.top - size / 2 + "px";
+
+      this.appendChild(ripple);
+      setTimeout(() => ripple.remove(), 600);
+    });
+  });
+</script>
+
+  <!-- ===== NEW BOTTOM NAV (راست به چپ + افکت کلیک) ===== -->
+<nav class="bottom-nav">
+ <div class="nav-item" id="home">
+    <img src="10.png" alt="خانه" class="nav-icon">
+    <span>همکلاسی</span>
+  </div>
+  <div class="nav-item" id="home">
+    <img src="11.png" alt="گفت‌وگو" class="nav-icon">
+    <span>چت باکس</span>
+  </div>
+ <div class="nav-item" id="home">
+    <img src="12.png" alt="گالری" class="nav-icon">
+    <span>رسانه</span>
+  </div>
+ <div class="nav-item" id="home">
+    <img src="13.png" alt="تقویم" class="nav-icon">
+    <span>تقویم</span>
+  </div>
+</nav>
+
+  <script>
+    // فعال‌سازی آیکون‌ها هنگام کلیک
+    const navItems = document.querySelectorAll('.nav-item');
+    navItems.forEach(item => {
+      item.addEventListener('click', () => {
+        navItems.forEach(i => i.classList.remove('active'));
+        item.classList.add('active');
+      });
+    });
+  </script>
+
+</body>
+</html>

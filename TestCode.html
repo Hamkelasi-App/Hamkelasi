@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>کارت امتحان</title>
+<style>
+  @import url('https://cdn.fontcdn.ir/Font/Persian/Vazir/Vazir.css');
+
+  body {
+    background-color: #edf3f6;
+    font-family: "Vazir", sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+  }
+
+  .card {
+    background: #fff;
+    width: 100%;
+    max-width: 420px; /* 🔹 باکس بزرگ‌تر شد */
+    border-radius: 16px;
+    box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+    padding: 6px;
+    box-sizing: border-box;
+  }
+
+  .card-header {
+    background: #f3f9f9;
+    border-radius: 14px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-direction: row-reverse;
+    padding: 10px 14px;
+    margin-bottom: 10px;
+  }
+
+  /* 🔹 عنوان و وضعیت سمت راست و کاملاً چسبیده */
+  .card-right {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    text-align: right;
+    direction: rtl;
+    margin-right: 0; /* هیچ فاصله‌ای از راست نباشد */
+  }
+
+.card-status {
+  align-self: flex-end;
+  margin-left: auto;
+  background-color: #00b7b3;
+  color: #fff;
+  font-size: 11px;
+  padding: 3px 10px;
+  border-radius: 4px;
+  display: inline-block;
+}
+
+  .card-status {
+    background-color: #00b7b3;
+    color: #fff;
+    font-size: 11px;
+    padding: 3px 10px;
+    border-radius: 4px;
+    display: inline-block;
+align-self: flex-end;
+    
+  }
+
+  /* 🔹 سه نقطه سمت چپ */
+  .card-left {
+    font-size: 22px;
+    color: #00a2a5;
+    transform: rotate(90deg);
+    user-select: none;
+    cursor: pointer;
+    margin-left: 0; /* چسبیده به چپ */
+  }
+
+  .card-body {
+    padding: 8px 10px 14px 10px;
+    font-size: 13px;
+    line-height: 1.9;
+  }
+
+  .info-row {
+    display: flex;
+    justify-content: space-between;
+    margin: 4px 0;
+  }
+
+  .info-label { color: #888; }
+  .info-value { color: #000; font-weight: 500; }
+
+  /* واکنش‌گرا */
+  @media (max-width: 768px) {
+    .card { max-width: 90%; }
+  }
+
+  @media (max-width: 480px) {
+    .card { max-width: 95%; }
+    .card-title { font-size: 13px; }
+    .card-status { font-size: 9.5px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="card">
+  <div class="card-header">
+    <!-- سه نقطه سمت چپ -->
+    <div class="card-left">⋮</div>
+
+    <!-- عنوان و وضعیت سمت راست -->
+    <div class="card-right">
+      <div class="card-title">امتحان کتبی</div>
+      <div class="card-status">عادی</div>
+    </div>
+  </div>
+
+  <div class="card-body">
+    <div class="info-row">
+      <div class="info-label">نوع آزمون:</div>
+      <div class="info-value">کوییز</div>
+    </div>
+    <div class="info-row">
+      <div class="info-label">تاریخ:</div>
+      <div class="info-value">دوشنبه ۲۱ مهر ۱۴۰۴</div>
+    </div>
+    <div class="info-row">
+      <div class="info-label">زمان:</div>
+      <div class="info-value">۹:۳۵</div>
+    </div>
+    <div class="info-row">
+      <div class="info-label">معلم:</div>
+      <div class="info-value">مهدی فتاحی</div>
+    </div>
+    <div class="info-row">
+      <div class="info-label">درس:</div>
+      <div class="info-value">فیزیک ۱ (ریاضی)</div>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>
