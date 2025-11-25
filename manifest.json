@@ -1,7 +1,7 @@
 {
   "name": "همکلاسی",
   "short_name": "همکلاسی",
-  "start_url": "meshkat.html",
+  "start_url": "index.html",
   "display": "standalone",
   "background_color": "#00d1d1",
   "theme_color": "#00d1d1",
@@ -19,3 +19,4 @@
     }
   ]
 }
+
