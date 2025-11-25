@@ -366,25 +366,26 @@
   });
 </script>
 <script>
-  // چک می‌کنیم آیا قبلاً لودینگ نمایش داده شده؟
-  const hasLoadedBefore = localStorage.getItem("loadingShown");
+  // چک می‌کنیم آیا در این جلسه لودینگ نمایش داده شده؟
+  const hasLoadedInThisSession = sessionStorage.getItem("loadingShown");
 
-  if (!hasLoadedBefore) {
-    // اگر اولین بار است → لودینگ را نمایش بده
+  if (!hasLoadedInThisSession) {
+    // اگر اولین بار در این جلسه است → لودینگ را نمایش بده
     document.getElementById("loading-screen").style.display = "flex";
 
-    // 3 ثانیه صبر کن سپس لودینگ را مخفی کن
+    // 3 ثانیه صبر کن سپس لودینگ را محو کن
     setTimeout(() => {
       document.getElementById("loading-screen").classList.add("fade-out");
 
-      // ثبت اینکه لودینگ نمایش داده شده
-      localStorage.setItem("loadingShown", "true");
+      // ثبت اینکه در این جلسه لودینگ نمایش داده شده
+      sessionStorage.setItem("loadingShown", "true");
     }, 3000);
 
   } else {
-    // اگر قبلاً لودینگ دیده شده → اصلاً نمایش نده
+    // اگر در همین جلسه قبلاً دیده شده → اصلاً نمایش نده
     document.getElementById("loading-screen").style.display = "none";
   }
 </script>
+
 </body>
 </html>
