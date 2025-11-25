@@ -217,6 +217,39 @@
      width: 30px !important;
      height: 35px !important;
     }
+/* صفحه لودینگ */
+#loading-screen {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 2000;
+}
+
+.loading-logo {
+  width: 130px;
+  animation: pulse 2.8s infinite ease-in-out;  /* قبلاً 1.5s بود */
+}
+
+@keyframes pulse {
+  0% { transform: scale(1); opacity: 0.9; }
+  50% { transform: scale(1.22); opacity: 1; }  /* کمی کمتر بزرگ میشه */
+  100% { transform: scale(1); opacity: 0.9; }
+}
+
+/* مخفی شدن با فید */
+.fade-out {
+  animation: fadeOut 0.7s forwards;
+}
+
+@keyframes fadeOut {
+  to { opacity: 0; visibility: hidden; }
+}
 
   </style>
 </head>
@@ -293,6 +326,10 @@
     <span>تقویم</span>
   </div>
 </nav>
+<!-- LOADING SCREEN -->
+<div id="loading-screen">
+  <img src="Icon-192 (2).png" class="loading-logo">
+</div>
 
 <script>
   // فعال‌سازی نوار پایین
@@ -328,6 +365,26 @@
     });
   });
 </script>
+<script>
+  // چک می‌کنیم آیا قبلاً لودینگ نمایش داده شده؟
+  const hasLoadedBefore = localStorage.getItem("loadingShown");
 
+  if (!hasLoadedBefore) {
+    // اگر اولین بار است → لودینگ را نمایش بده
+    document.getElementById("loading-screen").style.display = "flex";
+
+    // 3 ثانیه صبر کن سپس لودینگ را مخفی کن
+    setTimeout(() => {
+      document.getElementById("loading-screen").classList.add("fade-out");
+
+      // ثبت اینکه لودینگ نمایش داده شده
+      localStorage.setItem("loadingShown", "true");
+    }, 3000);
+
+  } else {
+    // اگر قبلاً لودینگ دیده شده → اصلاً نمایش نده
+    document.getElementById("loading-screen").style.display = "none";
+  }
+</script>
 </body>
 </html>
